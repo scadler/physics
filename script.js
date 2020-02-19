@@ -90,5 +90,5 @@ function game(){
     render();
     update();
 }
-setInterval(game, 20);
+setInterval(game,);
 canvas.addEventListener("mousemove", moveUser);
