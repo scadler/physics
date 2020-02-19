@@ -75,8 +75,8 @@ function update(){
         let diffY = ball.y - user.y
         let directionY = (ball.y > user.y) ? 1 : -1;
         let diffXY = Math.sqrt((diffX*diffX)+(diffY*diffY))
-        ball.velocityX = user.vx
-        ball.velocityY = user.vy
+        ball.velocityX = user.vx/2
+        ball.velocityY = user.vy/2
         //ball.velocityY = user.vy
     }
 
