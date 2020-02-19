@@ -75,35 +75,10 @@ function update(){
         let diffY = ball.y - user.y
         let directionY = (ball.y > user.y) ? 1 : -1;
         let diffXY = Math.sqrt((diffX*diffX)+(diffY*diffY))
-        ball.velocityX = user.vx/2
-        ball.velocityY = user.vy/2
+        ball.velocityX = user.vx/4
+        ball.velocityY = user.vy/4
         //ball.velocityY = user.vy
     }
-
-    // //computerLevel is difficult, higher=harder, 
-    // let computerLevel = 0.08
-    // comp.y += (ball.y - (comp.y + comp.height/2)) * computerLevel
-    // // this is saying if (ball.x < canvas.width/2 (on the right side)){ paddle = user} else {paddle = comp}
-    // let paddle = (ball.x < canvas.width/2) ? user : comp;
-    // if( collision(ball,paddle) ){
-    //     //need to find point of impact so rebound angle can be calculated
-    //     let collidePoint = (ball.y - (paddle.y + paddle.height/2));
-    //     collidePoint = collidePoint / (paddle.height/2);
-    //     let angleRadian = (Math.PI/4) * collidePoint;
-    //     //the ball moves right after hitting user paddle, left after comp
-    //     let direction = (ball.x < canvas.width/2) ? 1 : -1;
-    //     ball.velocityX = direction * ball.speed * Math.cos(angleRadian)
-    //     ball.velocityY = direction * ball.speed * Math.sin(angleRadian)
-    //     //the ball moves faster every rebound
-    //     ball.speed += 0.2;
-    // }
-    // if(ball.x - ball.radius < 0){
-    //     comp.score++;
-    //     resetBall();
-    // }else if(ball.x + ball.radius > canvas.width){
-    //     user.score++;
-    //     resetBall();
-    // }
 }
 function render(){
 drawRect(0, 0, canvas.width, canvas.height, "black");
