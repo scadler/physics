@@ -28,7 +28,8 @@ const user = {
     radius : 15,
     speed : 0,
     vx : 0,
-    vx : 0,
+    vy : 0,
+    v : 0,
     color : "Red",
 }
 function moveUser(event){
@@ -39,11 +40,12 @@ function moveUser(event){
     user.x = event.clientX - rect.top - user.radius/2;
     let directionX = (oldX > user.x) ? -1 : 1
     let directionY = (oldY > user.y) ? -1 : 1
-    user.vx= directionX * Math.sqrt((oldX - user.x)*(oldX - user.x));
-    user.vy= directionY * Math.sqrt((oldY - user.y)*(oldY - user.y));
-    console.log(user.vx +" "+ oldX + "X")
-    console.log(user.vy +" "+ oldY + "Y")
-
+    user.vx = directionX * Math.sqrt((oldX - user.x)*(oldX - user.x));
+    user.vy = directionY * Math.sqrt((oldY - user.y)*(oldY - user.y));
+    user.v = Math.sqrt((user.vx*user.vx)+(user.vy*user.vy))
+    console.log(user.v)
+    // console.log(user.vx +" "+ oldX + "X")
+    // console.log(user.vy +" "+ oldY + "Y")
 }
 function update(){
     ball.x += ball.velocityX;
@@ -52,9 +54,17 @@ function update(){
         //ball has hit top or bottom
         ball.velocityY = - ball.velocityY;
     }
-    if( ball.x + ball.radius > canvas.width || ball.x - ball.radius < 0){
+    else if( ball.x + ball.radius > canvas.width || ball.x - ball.radius < 0){
         //ball has hit top or bottom
         ball.velocityX = - ball.velocityX;
+    }
+    let closeX = Math.sqrt((ball.x - user.x)*(ball.x - user.x))
+    let closeY = Math.sqrt((ball.y - user.y)*(ball.y - user.y))
+    let closeXY = Math.sqrt((closeX*closeX)+(closeY*closeY))
+    if(closeXY <= 30){
+        console.log("collision")
+        ball.velocityX = user.vx
+        ball.velocityY = user.vy
     }
     // //computerLevel is difficult, higher=harder, 
     // let computerLevel = 0.08
@@ -91,4 +101,5 @@ function game(){
     update();
 }
 setInterval(game,);
-canvas.addEventListener("mousemove", moveUser);
+
+canvas.addEventListener("mousemove",moveUser);
