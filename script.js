@@ -54,7 +54,7 @@ function moveUser(event){
 function update(){
     ball.x += ball.velocityX;
     ball.y += ball.velocityY;
-    drawText("X: "+ball.x+" Y: "+ball.y, 0, 10, "White");
+    drawText("X: "+Math.round(ball.x)+" Y: "+Math.round(ball.y), 0, 10, "White");
     drawText("Vx: "+ball.velocityX+" Vy: "+ball.velocityY, 0, 20, "White");
     if( ball.y)
     if( ball.y + ball.radius > canvas.height || ball.y - ball.radius < 0){
@@ -89,8 +89,8 @@ function update(){
         ball.velocityY = user.vy/4
         //ball.velocityY = user.vy
             //if this code is activated it makes red and white act like magnets
-            ball.x = ball.x +((15-closeX)*directionX)
-            ball.y = ball.y +((15-closeY)*directionY)
+            // ball.x = ball.x +((15-closeX)*directionX)
+            // ball.y = ball.y +((15-closeY)*directionY)
 
     }
 }
