@@ -19,10 +19,10 @@ function drawText(text,x, y, color){
 }
 const ball = {
     x : canvas.width/2,
-    y : canvas.height/2,
+    y : canvas.height/2 + 40,
     radius : 15,
     speed : 0,
-    velocityX : 40,
+    velocityX : 0,
     velocityY : 0,
     color : "White",
 }
@@ -58,12 +58,22 @@ function update(){
     drawText("Vx: "+ball.velocityX+" Vy: "+ball.velocityY, 0, 20, "White");
     if( ball.y)
     if( ball.y + ball.radius > canvas.height || ball.y - ball.radius < 0){
-        //ball has hit top or bottom
         ball.velocityY = - ball.velocityY;
+        if( ball.y + ball.radius > canvas.height){
+            ball.y = canvas.height - ball.radius;
+        }
+        else{
+            ball.y = ball.radius;
+        }
     }
     else if( ball.x + ball.radius > canvas.width || ball.x - ball.radius < 0){
-        //ball has hit top or bottom
         ball.velocityX = - ball.velocityX;
+        if(ball.x + ball.radius > canvas.width){
+            ball.x = canvas.width - ball.radius;
+        }
+        else{
+            ball.x = ball.radius;
+        }
     }
     let closeX = Math.sqrt((ball.x - user.x)*(ball.x - user.x))
     let closeY = Math.sqrt((ball.y - user.y)*(ball.y - user.y))
@@ -78,19 +88,27 @@ function update(){
         ball.velocityX = user.vx/4
         ball.velocityY = user.vy/4
         //ball.velocityY = user.vy
+            //if this code is activated it makes red and white act like magnets
+            ball.x = ball.x +((15-closeX)*directionX)
+            ball.y = ball.y +((15-closeY)*directionY)
+
     }
 }
 function render(){
 drawRect(0, 0, canvas.width, canvas.height, "black");
 drawCircle(ball.x, ball.y, ball.radius, ball.color)
 drawCircle(user.x, user.y, user.radius, user.color)
-drawText("X: "+ball.x+" Y: "+ball.y, 0, 10, "White");
-drawText("Vx: "+ball.velocityX+" Vy: "+ball.velocityY, 0, 20, "White");
 }
 function game(){
     render();
     update();
 }
+function reset(){
+    ball.x = canvas.width/2;
+    ball.y = canvas.height/2;
+    ball.velocityX = 0;
+    ball.velocityY = 0;
+}
 setInterval(game,);
-
+canvas.addEventListener("mousedown",reset);
 canvas.addEventListener("mousemove",moveUser);
