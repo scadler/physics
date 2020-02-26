@@ -25,6 +25,7 @@ const ball = {
     velocityX : 0,
     velocityY : 0,
     color : "White",
+    v : 0,
 }
 const user = {
     x : canvas.width/2,
@@ -35,10 +36,10 @@ const user = {
     vy : 0,
     v : 0,
     color : "Red",
-    static : true,
+    static : false,
 }
 function moveUser(event){
-    if(ball.static === false){
+    if(user.static === false){
     let oldX = user.x
     let oldY = user.y
     let rect = canvas.getBoundingClientRect();
@@ -81,17 +82,20 @@ function update(){
     let closeX = Math.sqrt((ball.x - user.x)*(ball.x - user.x))
     let closeY = Math.sqrt((ball.y - user.y)*(ball.y - user.y))
     let closeXY = Math.sqrt((closeX*closeX)+(closeY*closeY))
+    let ballv = Math.sqrt((ball.velocityX*ball.velocityX)+(ball.velocityY*ball.velocityY))
     if(closeXY <= 30){
-        let isStatic = (user.static === true) ? 0 : 1
+        let theta = Math.atan((ball.x-user.x)/(ball.y-user.y))
+        let isStatic = (user.static === true) ? user.v : 1
         console.log(isStatic + " static")
-        // console.log("collision")
+        console.log(theta + " theta")
         let diffX = ball.x - user.x
         let directionX = (ball.x > user.x) ? 1 : -1;
         let diffY = ball.y - user.y
         let directionY = (ball.y > user.y) ? 1 : -1;
         let diffXY = Math.sqrt((diffX*diffX)+(diffY*diffY))
-        ball.velocityX = user.vx/4
-        ball.velocityY = user.vy/4
+        ball.velocityX = 0.25 * user.v * Math.cos(theta)
+        ball.velocityY = 0.25 * user.v * Math.sin(theta)
+
         //ball.velocityY = user.vy
         // console.log(Math.asin(closeX/closeXY))
             //if this code is activated it makes red and white act like magnets
@@ -110,9 +114,9 @@ function game(){
     update();
 }
 function staticUser(){
- let staticToggle = (ball.static === true) ? false : true;
- ball.static = staticToggle
- console.log(ball.static)
+ let staticToggle = (user.static === true) ? false : true;
+user.static = staticToggle
+ console.log(user.static)
 }
 function reset(){
     
