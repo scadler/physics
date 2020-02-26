@@ -35,8 +35,10 @@ const user = {
     vy : 0,
     v : 0,
     color : "Red",
+    static : true,
 }
 function moveUser(event){
+    if(ball.static === false){
     let oldX = user.x
     let oldY = user.y
     let rect = canvas.getBoundingClientRect();
@@ -50,6 +52,7 @@ function moveUser(event){
     // console.log(user.v)
     // console.log(user.vx +" "+ oldX + "X")
     // console.log(user.vy +" "+ oldY + "Y")
+    }
 }
 function update(){
     ball.x += ball.velocityX;
@@ -79,7 +82,9 @@ function update(){
     let closeY = Math.sqrt((ball.y - user.y)*(ball.y - user.y))
     let closeXY = Math.sqrt((closeX*closeX)+(closeY*closeY))
     if(closeXY <= 30){
-        console.log("collision")
+        let isStatic = (user.static === true) ? 0 : 1
+        console.log(isStatic + " static")
+        // console.log("collision")
         let diffX = ball.x - user.x
         let directionX = (ball.x > user.x) ? 1 : -1;
         let diffY = ball.y - user.y
@@ -88,6 +93,7 @@ function update(){
         ball.velocityX = user.vx/4
         ball.velocityY = user.vy/4
         //ball.velocityY = user.vy
+        // console.log(Math.asin(closeX/closeXY))
             //if this code is activated it makes red and white act like magnets
             // ball.x = ball.x +((15-closeX)*directionX)
             // ball.y = ball.y +((15-closeY)*directionY)
@@ -103,12 +109,22 @@ function game(){
     render();
     update();
 }
+function staticUser(){
+ let staticToggle = (ball.static === true) ? false : true;
+ ball.static = staticToggle
+ console.log(ball.static)
+}
 function reset(){
+    
+}
+$(window).keypress(function(e) {
+    if (e.which === 32) {
     ball.x = canvas.width/2;
     ball.y = canvas.height/2;
     ball.velocityX = 0;
     ball.velocityY = 0;
-}
+    }
+});
 setInterval(game,);
-canvas.addEventListener("mousedown",reset);
 canvas.addEventListener("mousemove",moveUser);
+canvas.addEventListener("click",staticUser);
